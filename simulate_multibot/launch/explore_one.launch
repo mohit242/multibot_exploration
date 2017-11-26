@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<launch>
+<!--<arg name="robot_macs" default="robot_0,00:00:00:00:00:11!" />!-->
+<arg name="log_path" default="$(env HOME)/logs" />
+<arg name="robot_local_map_frame" default="map" />
+<arg name="map_name" default="sim_world.world"/>
+<arg name="output" default="screen" />
+<arg name="frontier_selection" default="5"/>
+<arg name="robot_name" default="robot_0" />
+<arg name="robot_prefix" default=""/>
+<param name="/use_sim_time" value="true"/>
+<!--
+	Start simulation.
+	As far as we have only one robot in Stage, we simply start simulator and use top-topics.
+!-->
+<node respawn="true" pkg="stage_ros" type="stageros" name="simulation" args="$(find simulate_multibot)/world/$(arg  map_name)" />
+<!--
+	We remap scan topic and
+	set frames so that it could work
+!-->
+<node name="slam_gmapping_0" pkg="gmapping" type="slam_gmapping" output="$(arg output)">
+<rosparam>
+odom_frame: /odom
+base_frame: /base_link
+map_update_interval: 1.0
+</rosparam>
+	<remap from="scan" to="/base_scan"/>
+	<remap from="map" to="/map"/>
+</node>
+<!--
+	Make our robot movable with this simple package.
+	NOTICE: The package should be not from original, but from https://github.com/LeoSko/teleop_twist_keyboard
+-->
+<!--node name="teleop_twist_keyboard_0" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen" launch-prefix="xterm -e" args="-t /cmd_vel" respawn="true"/-->
+<!--
+	Start navigation stack
+-->
+<node respawn="true" pkg="move_base" type="move_base" name="move_base">
+	<param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
+	<param name="controller_frequency" value="5"/>
+
+	<rosparam file="$(find explorer)/param/simulation_costmap_common_params.yaml" command="load" ns="global_costmap" />
+	<rosparam file="$(find explorer)/param/simulation_costmap_common_params.yaml" command="load" ns="local_costmap" />
+	<rosparam file="$(find explorer)/param/simulation_local_costmap_params.yaml" command="load" />
+	<rosparam file="$(find explorer)/param/simulation_global_costmap_params.yaml" command="load" />
+	<rosparam file="$(find explorer)/param/base_local_planner_params.yaml" command="load" />
+
+</node>
+<node respawn="true" pkg="explorer" type="explorer" name="explorer" output="$(arg output)">
+	<!-- costmaps -->
+	<param name="robot_prefix" value="$(arg robot_prefix)"/>
+
+	<!-- simulation parameters -->
+	<param name="log_path" value="$(arg log_path)" />
+	<param name="robot_name" value="$(arg robot_name)" />
+
+	<!-- params for move_base -->
+	<param name="base_link" value="$(arg robot_prefix)/base_link" />
+	<param name="move_base_frame" value="/map" />
+	<param name="wait_for_planner_result" value="1" />
+
+	<!-- exploration parameters -->
+	<param name="frontier_selection" value="$(arg frontier_selection)" />
+	<rosparam file="$(find explorer)/param/simulation_costmap_common_params.yaml" command="load" ns="global_costmap" />
+	<rosparam file="$(find explorer)/param/simulation_costmap_common_params.yaml" command="load" ns="local_costmap" />
+	<rosparam file="$(find explorer)/param/simulation_local_costmap_params.yaml" command="load" />
+	<rosparam file="$(find explorer)/param/simulation_global_costmap_params.yaml" command="load" />
+	<rosparam file="$(find explorer)/param/base_local_planner_params.yaml" command="load" />
+
+</node>
+<!--
+	Start exploration package
+-->
+<!-- Creating bag-file with exploration -->
+
+<!--
+  Visualising the robot while building a map or navigating.
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find explorer)/rviz/explore_one.rviz"/>
+!-->
+</launch>
