@@ -54,22 +54,24 @@ threads 2
 window
 ( 
   size [ 745 448 ] 
-  center [ -18.000 20.000 ]
+  center [ 0.000 0.000 ]
 
   rotate [ 0.000 0.000 ]
   scale 18.000
+  show_data 1
+  show_grid 1
 )
 
 # load an environment bitmap
 floorplan
 ( 
-  name "willow"
-  bitmap "willow-full.pgm"
-  size [54.000 58.700 0.500]
-  pose [ -24.250 28.077 0.000 90.000 ]
+  name "map"
+  bitmap "FR101.png"
+  size [34.000 45.700 0.500]
+  pose [ 0.0 0.0 0.000 90.000 ]
 )
 
 # throw in a robot
-erratic( pose [ -18.669 20.888 0.000 180.000 ] color "green")
+erratic( pose [ -2.00 -2.0 0.000 180.000 ] color "green")
 
 
