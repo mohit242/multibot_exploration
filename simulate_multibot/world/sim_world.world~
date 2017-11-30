@@ -58,6 +58,8 @@ window
 
   rotate [ 0.000 0.000 ]
   scale 18.000
+  show_data 1
+  show_grid 1
 )
 
 # load an environment bitmap
