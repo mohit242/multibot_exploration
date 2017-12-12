@@ -11,7 +11,7 @@
     <arg name="interface" default="wlan0" />	
     <arg name="num_of_robots" default="2" />
     <arg name="robot_prefix" default="" />
-    <arg name="sim_robot_macs" default="robot_0,84:16:f9:15:49:26!robot_1,00:a1:b0:eb:86:c3!" />
+    <arg name="sim_robot_macs" default="robot_0,24:0a:64:1b:f0:1b!robot_1,00:a1:b0:eb:86:c3!" />
     <arg name="launch_prefix" default="xterm -e" />
     <arg name="simulation_mode" default="false" />
     <arg name="tx_power" default="" />
