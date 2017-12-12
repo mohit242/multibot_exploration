@@ -6,12 +6,12 @@
     <arg name="output" default="screen" />
     <arg name="position_local_robot_topic" default="odom" />
     <arg name="hostname" default="" />
-    <arg name="mac" default="00:a1:b0:eb:86:c3" />
+    <arg name="mac" default="6c:71:d9:df:7d:d5" />
     <arg name="emulate" default="false"/>
     <arg name="interface" default="wlan0" />	
     <arg name="num_of_robots" default="2" />
     <arg name="robot_prefix" default="" />
-    <arg name="sim_robot_macs" default="robot_0,24:0a:64:1b:f0:1b!robot_1,00:a1:b0:eb:86:c3!" />
+    <arg name="sim_robot_macs" default="robot_0,24:0a:64:1b:f0:1b!robot_1,6c:71:d9:df:7d:d5!" />
     <arg name="launch_prefix" default="xterm -e" />
     <arg name="simulation_mode" default="false" />
     <arg name="tx_power" default="" />

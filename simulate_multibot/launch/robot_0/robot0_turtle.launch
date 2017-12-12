@@ -3,6 +3,7 @@
 <launch>
   <arg name="log_path" default="./"/>
   <arg name="frontier_selection" default="1"/>
+    <include file="$(find turtlebot_navigation)/launch/gmapping_demo.launch"/>
 
   <node pkg="explorer" type="explorer" respawn="false" name="navigation" output="screen">
   	<param name="robot_name" value="robot_0"/>
