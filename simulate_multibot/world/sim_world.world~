@@ -66,12 +66,12 @@ window
 floorplan
 ( 
   name "map"
-  bitmap "FR101.png"
-  size [34.000 45.700 0.500]
+  bitmap "FR102.png"
+  size [50.000 55.700 0.500]
   pose [ 0.0 0.0 0.000 90.000 ]
 )
 
 # throw in a robot
-erratic( pose [ -2.00 -2.0 0.000 180.000 ] color "green")
+erratic( pose [ 15.00 2.5 0.000 180.000 ] color "green")
 
 
